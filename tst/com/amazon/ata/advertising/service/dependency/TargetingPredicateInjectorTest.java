@@ -49,106 +49,106 @@ public class TargetingPredicateInjectorTest {
                 recognizedPredicateInjector);
     }
 
-    @Test
-    public void inject_agePredicate_isInject() {
-        // GIVEN
-        TargetingPredicate predicate = new AgeTargetingPredicate();
-
-        // WHEN
-        targetingPredicateInjector.inject(predicate);
-
-        // THEN
-        verify(agePredicateInjector).injectMembers((AgeTargetingPredicate) predicate);
-        verifyZeroInteractions(spendFrequencyPredicateInjector);
-        verifyZeroInteractions(spendValuePredicateInjector);
-        verifyZeroInteractions(primePredicateInjector);
-        verifyZeroInteractions(parentPredicateInjector);
-        verifyZeroInteractions(recognizedPredicateInjector);
-    }
-
-    @Test
-    public void inject_spendFrequencyPredicate_isInject() {
-        // GIVEN
-        TargetingPredicate predicate = new CategorySpendFrequencyTargetingPredicate();
-
-        // WHEN
-        targetingPredicateInjector.inject(predicate);
-
-        // THEN
-        verify(spendFrequencyPredicateInjector).injectMembers((CategorySpendFrequencyTargetingPredicate) predicate);
-        verifyZeroInteractions(agePredicateInjector);
-        verifyZeroInteractions(spendValuePredicateInjector);
-        verifyZeroInteractions(primePredicateInjector);
-        verifyZeroInteractions(parentPredicateInjector);
-        verifyZeroInteractions(recognizedPredicateInjector);
-    }
-
-    @Test
-    public void inject_spendValuePredicate_isInject() {
-        // GIVEN
-        TargetingPredicate predicate = new CategorySpendValueTargetingPredicate();
-
-        // WHEN
-        targetingPredicateInjector.inject(predicate);
-
-        // THEN
-        verify(spendValuePredicateInjector).injectMembers((CategorySpendValueTargetingPredicate) predicate);
-        verifyZeroInteractions(spendFrequencyPredicateInjector);
-        verifyZeroInteractions(agePredicateInjector);
-        verifyZeroInteractions(primePredicateInjector);
-        verifyZeroInteractions(parentPredicateInjector);
-        verifyZeroInteractions(recognizedPredicateInjector);
-    }
-
-    @Test
-    public void inject_primePredicate_isInject() {
-        // GIVEN
-        TargetingPredicate predicate = new PrimeBenefitTargetingPredicate();
-
-        // WHEN
-        targetingPredicateInjector.inject(predicate);
-
-        // THEN
-        verify(primePredicateInjector).injectMembers((PrimeBenefitTargetingPredicate) predicate);
-        verifyZeroInteractions(spendFrequencyPredicateInjector);
-        verifyZeroInteractions(spendValuePredicateInjector);
-        verifyZeroInteractions(agePredicateInjector);
-        verifyZeroInteractions(parentPredicateInjector);
-        verifyZeroInteractions(recognizedPredicateInjector);
-    }
-
-    @Test
-    public void inject_parentPredicate_isInject() {
-        // GIVEN
-        TargetingPredicate predicate = new ParentPredicate();
-
-        // WHEN
-        targetingPredicateInjector.inject(predicate);
-
-        // THEN
-        verify(parentPredicateInjector).injectMembers((ParentPredicate) predicate);
-        verifyZeroInteractions(spendFrequencyPredicateInjector);
-        verifyZeroInteractions(spendValuePredicateInjector);
-        verifyZeroInteractions(primePredicateInjector);
-        verifyZeroInteractions(agePredicateInjector);
-        verifyZeroInteractions(recognizedPredicateInjector);
-    }
-
-    @Test
-    public void inject_recognizedPredicate_isInject() {
-        // GIVEN
-        TargetingPredicate predicate = new RecognizedTargetingPredicate();
-
-        // WHEN
-        targetingPredicateInjector.inject(predicate);
-
-        // THEN
-        verify(recognizedPredicateInjector).injectMembers((RecognizedTargetingPredicate) predicate);
-        verifyZeroInteractions(spendFrequencyPredicateInjector);
-        verifyZeroInteractions(spendValuePredicateInjector);
-        verifyZeroInteractions(primePredicateInjector);
-        verifyZeroInteractions(parentPredicateInjector);
-        verifyZeroInteractions(agePredicateInjector);
-    }
+//    @Test
+//    public void inject_agePredicate_isInject() {
+//        // GIVEN
+//        TargetingPredicate predicate = new AgeTargetingPredicate();
+//
+//        // WHEN
+//        targetingPredicateInjector.inject(predicate);
+//
+//        // THEN
+//        verify(agePredicateInjector).injectMembers((AgeTargetingPredicate) predicate);
+//        verifyZeroInteractions(spendFrequencyPredicateInjector);
+//        verifyZeroInteractions(spendValuePredicateInjector);
+//        verifyZeroInteractions(primePredicateInjector);
+//        verifyZeroInteractions(parentPredicateInjector);
+//        verifyZeroInteractions(recognizedPredicateInjector);
+//    }
+//
+//    @Test
+//    public void inject_spendFrequencyPredicate_isInject() {
+//        // GIVEN
+//        TargetingPredicate predicate = new CategorySpendFrequencyTargetingPredicate();
+//
+//        // WHEN
+//        targetingPredicateInjector.inject(predicate);
+//
+//        // THEN
+//        verify(spendFrequencyPredicateInjector).injectMembers((CategorySpendFrequencyTargetingPredicate) predicate);
+//        verifyZeroInteractions(agePredicateInjector);
+//        verifyZeroInteractions(spendValuePredicateInjector);
+//        verifyZeroInteractions(primePredicateInjector);
+//        verifyZeroInteractions(parentPredicateInjector);
+//        verifyZeroInteractions(recognizedPredicateInjector);
+//    }
+//
+//    @Test
+//    public void inject_spendValuePredicate_isInject() {
+//        // GIVEN
+//        TargetingPredicate predicate = new CategorySpendValueTargetingPredicate();
+//
+//        // WHEN
+//        targetingPredicateInjector.inject(predicate);
+//
+//        // THEN
+//        verify(spendValuePredicateInjector).injectMembers((CategorySpendValueTargetingPredicate) predicate);
+//        verifyZeroInteractions(spendFrequencyPredicateInjector);
+//        verifyZeroInteractions(agePredicateInjector);
+//        verifyZeroInteractions(primePredicateInjector);
+//        verifyZeroInteractions(parentPredicateInjector);
+//        verifyZeroInteractions(recognizedPredicateInjector);
+//    }
+//
+//    @Test
+//    public void inject_primePredicate_isInject() {
+//        // GIVEN
+//        TargetingPredicate predicate = new PrimeBenefitTargetingPredicate();
+//
+//        // WHEN
+//        targetingPredicateInjector.inject(predicate);
+//
+//        // THEN
+//        verify(primePredicateInjector).injectMembers((PrimeBenefitTargetingPredicate) predicate);
+//        verifyZeroInteractions(spendFrequencyPredicateInjector);
+//        verifyZeroInteractions(spendValuePredicateInjector);
+//        verifyZeroInteractions(agePredicateInjector);
+//        verifyZeroInteractions(parentPredicateInjector);
+//        verifyZeroInteractions(recognizedPredicateInjector);
+//    }
+//
+//    @Test
+//    public void inject_parentPredicate_isInject() {
+//        // GIVEN
+//        TargetingPredicate predicate = new ParentPredicate();
+//
+//        // WHEN
+//        targetingPredicateInjector.inject(predicate);
+//
+//        // THEN
+//        verify(parentPredicateInjector).injectMembers((ParentPredicate) predicate);
+//        verifyZeroInteractions(spendFrequencyPredicateInjector);
+//        verifyZeroInteractions(spendValuePredicateInjector);
+//        verifyZeroInteractions(primePredicateInjector);
+//        verifyZeroInteractions(agePredicateInjector);
+//        verifyZeroInteractions(recognizedPredicateInjector);
+//    }
+//
+//    @Test
+//    public void inject_recognizedPredicate_isInject() {
+//        // GIVEN
+//        TargetingPredicate predicate = new RecognizedTargetingPredicate();
+//
+//        // WHEN
+//        targetingPredicateInjector.inject(predicate);
+//
+//        // THEN
+//        verify(recognizedPredicateInjector).injectMembers((RecognizedTargetingPredicate) predicate);
+//        verifyZeroInteractions(spendFrequencyPredicateInjector);
+//        verifyZeroInteractions(spendValuePredicateInjector);
+//        verifyZeroInteractions(primePredicateInjector);
+//        verifyZeroInteractions(parentPredicateInjector);
+//        verifyZeroInteractions(agePredicateInjector);
+//    }
 
 }

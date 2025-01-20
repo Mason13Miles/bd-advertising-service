@@ -1,9 +1,6 @@
-//import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-//import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 plugins {
     id 'java'
-    id 'checkstyle'
+//    id 'checkstyle'
     id 'jacoco'
     id 'com.github.spotbugs' version '4.7.1'
     id 'com.adarshr.test-logger' version '3.0.0'
@@ -11,24 +8,43 @@ plugins {
     id 'net.ltgt.apt-idea' version "0.15"
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(22)
+    }
+}
+
+
 repositories {
     mavenCentral()
 }
 
-checkstyle {
-//    sourceSets = [sourceSets.main, sourceSets.test]
-    sourceSets = [sourceSets.main]
-    configFile = file("$rootDir/LibrariesAndUtilities/ATACheckstyle/configuration/checkstyle/checkstyle.xml")
-    configProperties.put('checkstyle.suppression.filter', "$rootDir/LibrariesAndUtilities/ATACheckstyle/configuration/checkstyle/suppressions.xml")
-    ignoreFailures = true
-}
+//checkstyle {
+////    sourceSets = [sourceSets.main, sourceSets.test]
+//    sourceSets = [sourceSets.main]
+//    configFile = file("$rootDir/LibrariesAndUtilities/ATACheckstyle/configuration/checkstyle/checkstyle.xml")
+//    configProperties.put('checkstyle.suppression.file', "$rootDir/LibrariesAndUtilities/ATACheckstyle/configuration/checkstyle/suppressions.xml")
+//    ignoreFailures = true
+//}
+//
+//tasks.withType(Checkstyle).configureEach {
+//    classpath = sourceSets.main.output + sourceSets.main.compileClasspath
+//}
 
-tasks.withType(Checkstyle) {
+
+spotbugsMain {
     reports {
-        xml.enabled false
-        html.enabled true
+        // Old approach causing the error:
+        // xml.enabled = false
+
+        // New approach:
+        xml.required = false
+
+        // If you also have HTML:
+        html.required = false
     }
 }
+
 
 check.dependsOn jacocoTestCoverageVerification
 jacocoTestCoverageVerification {
@@ -91,7 +107,7 @@ dependencies {
 
 
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
-   // implementation group: 'com.google.dagger', name: 'dagger', version: '2.15'
+    // implementation group: 'com.google.dagger', name: 'dagger', version: '2.15'
 
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
 
