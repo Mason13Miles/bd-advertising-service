@@ -1,18 +1,27 @@
 package com.amazon.ata.advertising.service.targeting;
 
 import com.amazon.ata.advertising.service.model.RequestContext;
+import com.amazon.ata.advertising.service.targeting.TargetingGroup;
 import com.amazon.ata.advertising.service.targeting.predicate.TargetingPredicate;
 import com.amazon.ata.advertising.service.targeting.predicate.TargetingPredicateResult;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 /**
  * Evaluates TargetingPredicates for a given RequestContext.
  */
 public class TargetingEvaluator {
-    public static final boolean IMPLEMENTED_STREAMS = false;
-    public static final boolean IMPLEMENTED_CONCURRENCY = false;
+    public static final boolean IMPLEMENTED_STREAMS = true;
+    public static final boolean IMPLEMENTED_CONCURRENCY = true;
     private final RequestContext requestContext;
+    private static final int THREAD_POOL_SIZE = 10;
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
     /**
      * Creates an evaluator for targeting predicates.
@@ -29,17 +38,33 @@ public class TargetingEvaluator {
      * @return TRUE if all of the TargetingPredicates evaluate to TRUE against the RequestContext, FALSE otherwise.
      */
     public TargetingPredicateResult evaluate(TargetingGroup targetingGroup) {
-        List<TargetingPredicate> targetingPredicates = targetingGroup.getTargetingPredicates();
-        boolean allTruePredicates = true;
-        for (TargetingPredicate predicate : targetingPredicates) {
-            TargetingPredicateResult predicateResult = predicate.evaluate(requestContext);
-            if (!predicateResult.isTrue()) {
-                allTruePredicates = false;
-                break;
-            }
-        }
+        List<TargetingPredicate> predicates = targetingGroup.getTargetingPredicates();
 
-        return allTruePredicates ? TargetingPredicateResult.TRUE :
-                                   TargetingPredicateResult.FALSE;
+        try {
+            List<Future<TargetingPredicateResult>> futures = predicates.stream()
+                    .map(predicate -> executorService.submit(() -> predicate.evaluate(requestContext)))
+                    .collect(Collectors.toList());
+
+            return futures.stream()
+                    .map(this::getFutureResult)
+                    .filter(result -> result != TargetingPredicateResult.TRUE)
+                    .findFirst()
+                    .orElse(TargetingPredicateResult.TRUE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return TargetingPredicateResult.FALSE;
+        }
+    }
+
+    private TargetingPredicateResult getFutureResult(Future<TargetingPredicateResult> future) {
+        try {
+            TargetingPredicateResult result = future.get();
+            return result == TargetingPredicateResult.INDETERMINATE ? TargetingPredicateResult.FALSE : result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return TargetingPredicateResult.FALSE;
+        }
     }
 }
+
+

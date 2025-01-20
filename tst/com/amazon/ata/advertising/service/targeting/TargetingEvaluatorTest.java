@@ -30,7 +30,8 @@ public class TargetingEvaluatorTest {
     private RequestContext requestContext;
 
     @InjectMocks
-    private TargetingEvaluator targetingEvaluator;
+    private
+    TargetingEvaluator targetingEvaluator;
 
     @BeforeEach
     public void setup() {
